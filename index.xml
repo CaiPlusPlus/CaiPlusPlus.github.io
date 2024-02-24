@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Hung的日常时光</title>
+    <link>https://example.org/</link>
+    <description>Recent content on Hung的日常时光</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sat, 24 Feb 2024 14:22:36 +0800</lastBuildDate>
+    <atom:link href="https://example.org/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Golang学习总结</title>
+      <link>https://example.org/posts/my-first-blog/</link>
+      <pubDate>Sat, 24 Feb 2024 14:22:36 +0800</pubDate>
+      <guid>https://example.org/posts/my-first-blog/</guid>
+      <description>Golang学习总结 GOPATH设置的意义 简单理解就是Go的工作路径； go build、install、get、mod 基础语法 循环（go range） 这是一个语法糖，底层是for循环，初始化会拷贝遍历的列表，然后每次遍历都是对同一个临时变量的遍历赋值。&#xA;坑1：对临时变量取地址，最终的值就是最后一个值的；&#xA;解决：使用局部变量拷贝这个临时变量再取地址；直接索引获取原来的元素再取地址；&#xA;坑2：初始化时会拷贝原列表，对原列表追加数据不会引发异常；&#xA;坑3：对大数组遍历会初始化拷贝引发内存浪费；&#xA;解决：数组取地址遍历&amp;amp;arr；数组切片引用arr[:]&#xA;坑4：map删除没有遍历到的数据是没异常的；map新增元素是有可能遍历到的（测试小值较大概率没遍历到）&#xA;解决：map和slice数据指向底层数据结构，没有拷贝&#xA;坑5：在使用goroutine中直接使用循环中的临时变量，导致全部都是最后一个变量&#xA;解决：调用goroutine时使用参数传入，值传递；使用局部变量拷贝传递；&#xA;指针 直接申明指针或者new()来创建指针变量&#xA;结构体-方法 继承主要使用组合方式&#xA;接口 接口作为函数参数-&amp;gt;提供给实现该接口的系列结构体&#xA;使用new()生成结构体实例，可显性指定接口&#xA;接口嵌套&#xA;defer 延迟的函数是在 函数return 和 发生panic 的时候被调用&#xA;函数的return并非一个原子操作，return的过程可以被分解为以下三步：&#xA;设置返回值 - &amp;gt; 执行defer语句 - &amp;gt; 将结果返回&#xA;延迟调用的语法规则&#xA;defer关键字后面表达式必须是函数或者方法调用&#xA;延迟内容不能被括号括起来&#xA;配合recover处理panic&#xA;并发 grotoutine recover只能捕获一次panic，并且只能捕获当前goroutine的；&#xA;channel 是并发安全的&#xA;sync 锁复制后的新的锁拥有了原来的锁状态&#xA;map非并发安全，sync.map是&#xA;mutex和stomic区别：&#xA;使用方式：通常metux用于保护一段执行逻辑，而atomic主要是对变量进行操作&#xA;底层实现：metux由操作系统调度器实现，而atomic操作有底层硬件指令支持，保证在cpu上执行不中断。所以atomic的性能也能随cpu的个数增加线性提升&#xA;协程池 主要就是worker， task，pool</description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>Hung的日常时光</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="description" content="">
+    <meta name="generator" content="Hugo 0.123.2">
+    
+    
+    
+    
+      <meta name="robots" content="noindex, nofollow">
+    
+
+    
+<link rel="stylesheet" href="/ananke/css/main.min.css" >
+
+
+
+    
+
+    
+      
+
+    
+
+    
+    
+      <link href="/index.xml" rel="alternate" type="application/rss+xml" title="Hung的日常时光" />
+      <link href="/index.xml" rel="feed" type="application/rss+xml" title="Hung的日常时光" />
+      
+    
+
+    
+      <link rel="canonical" href="https://example.org/">
+    
+
+    <meta property="og:title" content="Hung的日常时光" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://example.org/" />
+
+<meta itemprop="name" content="Hung的日常时光">
+<meta itemprop="description" content=""><meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Hung的日常时光"/>
+<meta name="twitter:description" content=""/>
+
+	
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+
+  <header>
+    <div class="pb3-m pb6-l bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="/" class="f3 fw2 hover-white no-underline white-90 dib">
+      
+        Hung的日常时光
+      
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+      
+<div class="ananke-socials">
+  
+</div>
+
+    </div>
+  </div>
+</nav>
+
+      <div class="tc-l pv3 ph3 ph4-ns">
+        <h1 class="f2 f-subheadline-l fw2 light-silver mb0 lh-title">
+          Hung的日常时光
+        </h1>
+        
+      </div>
+    </div>
+  </header>
+
+
+    <main class="pb7" role="main">
+      
+ <article class="cf ph3 ph5-l pv3 pv4-l f4 tc-l center measure-wide lh-copy mid-gray">
+    
+  </article>
+  
+  
+  
+  
+  
+  
+  
+    
+    
+
+    <div class="pa3 pa4-ns w-100 w-70-ns center">
+      
+       
+          <h1 class="flex-none">
+            Recent Posts
+          </h1>
+        
+
+      
+
+      <section class="w-100 mw8">
+        
+        
+          <div class="relative w-100 mb4">
+            
+<article class="bb b--black-10">
+  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
+    <div class="flex flex-column flex-row-ns">
+      
+      <div class="blah w-100">
+        <h1 class="f3 fw1 athelas mt0 lh-title">
+          <a href="/posts/my-first-blog/" class="color-inherit dim link">
+            Golang学习总结
+            </a>
+        </h1>
+        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
+          Golang学习总结 GOPATH设置的意义 简单理解就是Go的工作路径； go build、install、get、mod 基础语法 循环（go range） 这是一个语法糖，底层是for循环，初始化会拷贝遍历的列表，然后每次遍历都是对同一个临时变量的遍历赋值。
+坑1：对临时变量取地址，最终的值就是最后一个值的；
+解决：使用局部变量拷贝这个临时变量再取地址；直接索引获取原来的元素再取地址；
+坑2：初始化时会拷贝原列表，对原列表追加数据不会引发异常；
+坑3：对大数组遍历会初始化拷贝引发内存浪费；
+解决：数组取地址遍历&amp;arr；数组切片引用arr[:]
+坑4：map删除没有遍历到的数据是没异常的；map新增元素是有可能遍历到的（测试小值较大概率没遍历到）
+解决：map和slice数据指向底层数据结构，没有拷贝
+坑5：在使用goroutine中直接使用循环中的临时变量，导致全部都是最后一个变量
+解决：调用goroutine时使用参数传入，值传递；使用局部变量拷贝传递；
+指针 直接申明指针或者new()来创建指针变量
+结构体-方法 继承主要使用组合方式
+接口 接口作为函数参数-&gt;提供给实现该接口的系列结构体
+使用new()生成结构体实例，可显性指定接口
+接口嵌套
+defer 延迟的函数是在 函数return 和 发生panic 的时候被调用
+函数的return并非一个原子操作，return的过程可以被分解为以下三步：
+设置返回值 - &gt; 执行defer语句 - &gt; 将结果返回
+延迟调用的语法规则
+defer关键字后面表达式必须是函数或者方法调用
+延迟内容不能被括号括起来
+配合recover处理panic
+并发 grotoutine recover只能捕获一次panic，并且只能捕获当前goroutine的；
+channel 是并发安全的
+sync 锁复制后的新的锁拥有了原来的锁状态
+map非并发安全，sync.map是
+mutex和stomic区别：
+使用方式：通常metux用于保护一段执行逻辑，而atomic主要是对变量进行操作
+底层实现：metux由操作系统调度器实现，而atomic操作有底层硬件指令支持，保证在cpu上执行不中断。所以atomic的性能也能随cpu的个数增加线性提升
+协程池 主要就是worker， task，pool
+        </div>
+          <a href="/posts/my-first-blog/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+          </div>
+        
+      </section>
+
+      
+
+      </div>
+  
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://example.org/" >
+    &copy;  Hung的日常时光 2024 
+  </a>
+    <div>
+<div class="ananke-socials">
+  
+</div>
+</div>
+  </div>
+</footer>
+
+  </body>
+</html>

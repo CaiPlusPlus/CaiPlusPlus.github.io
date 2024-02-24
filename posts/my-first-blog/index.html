@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    
+    <title>Golang学习总结 | Hung的日常时光</title>
+    <meta name="viewport" content="width=device-width,minimum-scale=1">
+    <meta name="description" content="Golang学习总结 GOPATH设置的意义 简单理解就是Go的工作路径； go build、install、get、mod 基础语法 循环（go range） 这是一个语法糖，底层是for循环，初始化会拷贝遍历的列表，然后每次遍历都是对同一个临时变量的遍历赋值。
+坑1：对临时变量取地址，最终的值就是最后一个值的；
+解决：使用局部变量拷贝这个临时变量再取地址；直接索引获取原来的元素再取地址；
+坑2：初始化时会拷贝原列表，对原列表追加数据不会引发异常；
+坑3：对大数组遍历会初始化拷贝引发内存浪费；
+解决：数组取地址遍历&amp;arr；数组切片引用arr[:]
+坑4：map删除没有遍历到的数据是没异常的；map新增元素是有可能遍历到的（测试小值较大概率没遍历到）
+解决：map和slice数据指向底层数据结构，没有拷贝
+坑5：在使用goroutine中直接使用循环中的临时变量，导致全部都是最后一个变量
+解决：调用goroutine时使用参数传入，值传递；使用局部变量拷贝传递；
+指针 直接申明指针或者new()来创建指针变量
+结构体-方法 继承主要使用组合方式
+接口 接口作为函数参数-&gt;提供给实现该接口的系列结构体
+使用new()生成结构体实例，可显性指定接口
+接口嵌套
+defer 延迟的函数是在 函数return 和 发生panic 的时候被调用
+函数的return并非一个原子操作，return的过程可以被分解为以下三步：
+设置返回值 - &gt; 执行defer语句 - &gt; 将结果返回
+延迟调用的语法规则
+defer关键字后面表达式必须是函数或者方法调用
+延迟内容不能被括号括起来
+配合recover处理panic
+并发 grotoutine recover只能捕获一次panic，并且只能捕获当前goroutine的；
+channel 是并发安全的
+sync 锁复制后的新的锁拥有了原来的锁状态
+map非并发安全，sync.map是
+mutex和stomic区别：
+使用方式：通常metux用于保护一段执行逻辑，而atomic主要是对变量进行操作
+底层实现：metux由操作系统调度器实现，而atomic操作有底层硬件指令支持，保证在cpu上执行不中断。所以atomic的性能也能随cpu的个数增加线性提升
+协程池 主要就是worker， task，pool">
+    <meta name="generator" content="Hugo 0.123.2">
+    
+    
+    
+    
+      <meta name="robots" content="noindex, nofollow">
+    
+
+    
+<link rel="stylesheet" href="/ananke/css/main.min.css" >
+
+
+
+    
+
+    
+      
+
+    
+
+    
+
+    
+      <link rel="canonical" href="https://example.org/posts/my-first-blog/">
+    
+
+    <meta property="og:title" content="Golang学习总结" />
+<meta property="og:description" content="Golang学习总结 GOPATH设置的意义 简单理解就是Go的工作路径； go build、install、get、mod 基础语法 循环（go range） 这是一个语法糖，底层是for循环，初始化会拷贝遍历的列表，然后每次遍历都是对同一个临时变量的遍历赋值。
+坑1：对临时变量取地址，最终的值就是最后一个值的；
+解决：使用局部变量拷贝这个临时变量再取地址；直接索引获取原来的元素再取地址；
+坑2：初始化时会拷贝原列表，对原列表追加数据不会引发异常；
+坑3：对大数组遍历会初始化拷贝引发内存浪费；
+解决：数组取地址遍历&amp;arr；数组切片引用arr[:]
+坑4：map删除没有遍历到的数据是没异常的；map新增元素是有可能遍历到的（测试小值较大概率没遍历到）
+解决：map和slice数据指向底层数据结构，没有拷贝
+坑5：在使用goroutine中直接使用循环中的临时变量，导致全部都是最后一个变量
+解决：调用goroutine时使用参数传入，值传递；使用局部变量拷贝传递；
+指针 直接申明指针或者new()来创建指针变量
+结构体-方法 继承主要使用组合方式
+接口 接口作为函数参数-&gt;提供给实现该接口的系列结构体
+使用new()生成结构体实例，可显性指定接口
+接口嵌套
+defer 延迟的函数是在 函数return 和 发生panic 的时候被调用
+函数的return并非一个原子操作，return的过程可以被分解为以下三步：
+设置返回值 - &gt; 执行defer语句 - &gt; 将结果返回
+延迟调用的语法规则
+defer关键字后面表达式必须是函数或者方法调用
+延迟内容不能被括号括起来
+配合recover处理panic
+并发 grotoutine recover只能捕获一次panic，并且只能捕获当前goroutine的；
+channel 是并发安全的
+sync 锁复制后的新的锁拥有了原来的锁状态
+map非并发安全，sync.map是
+mutex和stomic区别：
+使用方式：通常metux用于保护一段执行逻辑，而atomic主要是对变量进行操作
+底层实现：metux由操作系统调度器实现，而atomic操作有底层硬件指令支持，保证在cpu上执行不中断。所以atomic的性能也能随cpu的个数增加线性提升
+协程池 主要就是worker， task，pool" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://example.org/posts/my-first-blog/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2024-02-24T14:22:36+08:00" />
+<meta property="article:modified_time" content="2024-02-24T14:22:36+08:00" />
+
+<meta itemprop="name" content="Golang学习总结">
+<meta itemprop="description" content="Golang学习总结 GOPATH设置的意义 简单理解就是Go的工作路径； go build、install、get、mod 基础语法 循环（go range） 这是一个语法糖，底层是for循环，初始化会拷贝遍历的列表，然后每次遍历都是对同一个临时变量的遍历赋值。
+坑1：对临时变量取地址，最终的值就是最后一个值的；
+解决：使用局部变量拷贝这个临时变量再取地址；直接索引获取原来的元素再取地址；
+坑2：初始化时会拷贝原列表，对原列表追加数据不会引发异常；
+坑3：对大数组遍历会初始化拷贝引发内存浪费；
+解决：数组取地址遍历&amp;arr；数组切片引用arr[:]
+坑4：map删除没有遍历到的数据是没异常的；map新增元素是有可能遍历到的（测试小值较大概率没遍历到）
+解决：map和slice数据指向底层数据结构，没有拷贝
+坑5：在使用goroutine中直接使用循环中的临时变量，导致全部都是最后一个变量
+解决：调用goroutine时使用参数传入，值传递；使用局部变量拷贝传递；
+指针 直接申明指针或者new()来创建指针变量
+结构体-方法 继承主要使用组合方式
+接口 接口作为函数参数-&gt;提供给实现该接口的系列结构体
+使用new()生成结构体实例，可显性指定接口
+接口嵌套
+defer 延迟的函数是在 函数return 和 发生panic 的时候被调用
+函数的return并非一个原子操作，return的过程可以被分解为以下三步：
+设置返回值 - &gt; 执行defer语句 - &gt; 将结果返回
+延迟调用的语法规则
+defer关键字后面表达式必须是函数或者方法调用
+延迟内容不能被括号括起来
+配合recover处理panic
+并发 grotoutine recover只能捕获一次panic，并且只能捕获当前goroutine的；
+channel 是并发安全的
+sync 锁复制后的新的锁拥有了原来的锁状态
+map非并发安全，sync.map是
+mutex和stomic区别：
+使用方式：通常metux用于保护一段执行逻辑，而atomic主要是对变量进行操作
+底层实现：metux由操作系统调度器实现，而atomic操作有底层硬件指令支持，保证在cpu上执行不中断。所以atomic的性能也能随cpu的个数增加线性提升
+协程池 主要就是worker， task，pool"><meta itemprop="datePublished" content="2024-02-24T14:22:36+08:00" />
+<meta itemprop="dateModified" content="2024-02-24T14:22:36+08:00" />
+<meta itemprop="wordCount" content="58">
+<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Golang学习总结"/>
+<meta name="twitter:description" content="Golang学习总结 GOPATH设置的意义 简单理解就是Go的工作路径； go build、install、get、mod 基础语法 循环（go range） 这是一个语法糖，底层是for循环，初始化会拷贝遍历的列表，然后每次遍历都是对同一个临时变量的遍历赋值。
+坑1：对临时变量取地址，最终的值就是最后一个值的；
+解决：使用局部变量拷贝这个临时变量再取地址；直接索引获取原来的元素再取地址；
+坑2：初始化时会拷贝原列表，对原列表追加数据不会引发异常；
+坑3：对大数组遍历会初始化拷贝引发内存浪费；
+解决：数组取地址遍历&amp;arr；数组切片引用arr[:]
+坑4：map删除没有遍历到的数据是没异常的；map新增元素是有可能遍历到的（测试小值较大概率没遍历到）
+解决：map和slice数据指向底层数据结构，没有拷贝
+坑5：在使用goroutine中直接使用循环中的临时变量，导致全部都是最后一个变量
+解决：调用goroutine时使用参数传入，值传递；使用局部变量拷贝传递；
+指针 直接申明指针或者new()来创建指针变量
+结构体-方法 继承主要使用组合方式
+接口 接口作为函数参数-&gt;提供给实现该接口的系列结构体
+使用new()生成结构体实例，可显性指定接口
+接口嵌套
+defer 延迟的函数是在 函数return 和 发生panic 的时候被调用
+函数的return并非一个原子操作，return的过程可以被分解为以下三步：
+设置返回值 - &gt; 执行defer语句 - &gt; 将结果返回
+延迟调用的语法规则
+defer关键字后面表达式必须是函数或者方法调用
+延迟内容不能被括号括起来
+配合recover处理panic
+并发 grotoutine recover只能捕获一次panic，并且只能捕获当前goroutine的；
+channel 是并发安全的
+sync 锁复制后的新的锁拥有了原来的锁状态
+map非并发安全，sync.map是
+mutex和stomic区别：
+使用方式：通常metux用于保护一段执行逻辑，而atomic主要是对变量进行操作
+底层实现：metux由操作系统调度器实现，而atomic操作有底层硬件指令支持，保证在cpu上执行不中断。所以atomic的性能也能随cpu的个数增加线性提升
+协程池 主要就是worker， task，pool"/>
+
+	
+  </head>
+
+  <body class="ma0 avenir bg-near-white">
+
+    
+   
+  
+
+  <header>
+    <div class="bg-black">
+      <nav class="pv3 ph3 ph4-ns" role="navigation">
+  <div class="flex-l justify-between items-center center">
+    <a href="/" class="f3 fw2 hover-white no-underline white-90 dib">
+      
+        Hung的日常时光
+      
+    </a>
+    <div class="flex-l items-center">
+      
+
+      
+      
+<div class="ananke-socials">
+  
+</div>
+
+    </div>
+  </div>
+</nav>
+
+    </div>
+  </header>
+
+
+
+    <main class="pb7" role="main">
+      
+  
+  <article class="flex-l flex-wrap justify-between mw8 center ph3">
+    <header class="mt4 w-100">
+      <aside class="instapaper_ignoref b helvetica tracked ttu">
+          
+        Posts
+      </aside>
+      
+
+
+
+
+
+
+
+
+
+
+  <div id="sharing" class="mt3 ananke-socials">
+    
+  </div>
+
+
+      <h1 class="f1 athelas mt3 mb1">Golang学习总结</h1>
+      
+      
+      
+      <time class="f6 mv4 dib tracked" datetime="2024-02-24T14:22:36+08:00">February 24, 2024</time>
+      
+
+      
+      
+    </header>
+    <div class="nested-copy-line-height lh-copy serif f4 nested-links mid-gray pr4-l w-two-thirds-l"><h1 id="golang学习总结">Golang学习总结</h1>
+<h2 id="gopath设置的意义">GOPATH设置的意义</h2>
+<ul>
+<li>简单理解就是Go的工作路径；</li>
+<li>go build、install、get、mod</li>
+</ul>
+<h2 id="基础语法">基础语法</h2>
+<h3 id="循环go-range">循环（go range）</h3>
+<p>这是一个语法糖，底层是for循环，初始化会拷贝遍历的列表，然后每次遍历都是对同一个临时变量的遍历赋值。</p>
+<p>坑1：对临时变量取地址，最终的值就是最后一个值的；</p>
+<p>解决：使用局部变量拷贝这个临时变量再取地址；直接索引获取原来的元素再取地址；</p>
+<p>坑2：初始化时会拷贝原列表，对原列表追加数据不会引发异常；</p>
+<p>坑3：对大数组遍历会初始化拷贝引发内存浪费；</p>
+<p>解决：数组取地址遍历&amp;arr；数组切片引用arr[:]</p>
+<p>坑4：map删除没有遍历到的数据是没异常的；map新增元素是有可能遍历到的（测试小值较大概率没遍历到）</p>
+<p>解决：map和slice数据指向底层数据结构，没有拷贝</p>
+<p>坑5：在使用goroutine中直接使用循环中的临时变量，导致全部都是最后一个变量</p>
+<p>解决：调用goroutine时使用参数传入，值传递；使用局部变量拷贝传递；</p>
+<h3 id="指针">指针</h3>
+<p>直接申明指针或者new()来创建指针变量</p>
+<h3 id="结构体-方法">结构体-方法</h3>
+<p>继承主要使用组合方式</p>
+<h3 id="接口">接口</h3>
+<p>接口作为函数参数-&gt;提供给实现该接口的系列结构体</p>
+<p>使用new()生成结构体实例，可显性指定接口</p>
+<p>接口嵌套</p>
+<h3 id="defer">defer</h3>
+<ol>
+<li>
+<p>延迟的函数是在 函数return 和 发生panic 的时候被调用</p>
+<p>函数的return并非一个原子操作，return的过程可以被分解为以下三步：</p>
+<p>设置返回值 - &gt; 执行defer语句 - &gt; 将结果返回</p>
+</li>
+<li>
+<p>延迟调用的语法规则</p>
+<p>defer关键字后面表达式必须是函数或者方法调用</p>
+<p>延迟内容不能被括号括起来</p>
+</li>
+<li>
+<p>配合recover处理panic</p>
+</li>
+</ol>
+<h2 id="并发">并发</h2>
+<h3 id="grotoutine">grotoutine</h3>
+<p>recover只能捕获一次panic，并且只能捕获当前goroutine的；</p>
+<h3 id="channel">channel</h3>
+<p>是并发安全的</p>
+<h2 id="sync">sync</h2>
+<p>锁复制后的新的锁拥有了原来的锁状态</p>
+<p>map非并发安全，sync.map是</p>
+<p>mutex和stomic区别：</p>
+<p>使用方式：通常metux用于保护一段执行逻辑，而atomic主要是对变量进行操作</p>
+<p>底层实现：metux由操作系统调度器实现，而atomic操作有底层硬件指令支持，保证在cpu上执行不中断。所以atomic的性能也能随cpu的个数增加线性提升</p>
+<h2 id="协程池">协程池</h2>
+<p>主要就是worker， task，pool</p>
+<ul class="pa0">
+  
+</ul>
+<div class="mt6 instapaper_ignoref">
+      
+      
+      </div>
+    </div>
+
+    <aside class="w-30-l mt6-l">
+
+
+
+
+</aside>
+
+  </article>
+
+    </main>
+    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
+  <div class="flex justify-between">
+  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://example.org/" >
+    &copy;  Hung的日常时光 2024 
+  </a>
+    <div>
+<div class="ananke-socials">
+  
+</div>
+</div>
+  </div>
+</footer>
+
+  </body>
+</html>
