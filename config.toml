@@ -1,6 +1,6 @@
 baseURL = "https://caiplusplus.github.io/"
 languageCode = "zh-cn"
-title = "Hung的技术博客"
+title = "菜可以"
 theme = "ananke"
 hasCJKLanguage = true
 summaryLength = 30
