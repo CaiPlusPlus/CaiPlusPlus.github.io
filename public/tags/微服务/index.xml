@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>微服务 on 菜可以</title>
-    <link>http://localhost:1313/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/</link>
+    <link>http://localhost:50987/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/</link>
     <description>Recent content in 微服务 on 菜可以</description>
     <generator>Hugo</generator>
     <language>zh-cn</language>
     <lastBuildDate>Wed, 01 May 2024 11:00:00 +0800</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://localhost:50987/tags/%E5%BE%AE%E6%9C%8D%E5%8A%A1/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>云原生技术概览</title>
-      <link>http://localhost:1313/posts/cloud-native-intro/</link>
+      <link>http://localhost:50987/posts/cloud-native-intro/</link>
       <pubDate>Wed, 01 May 2024 11:00:00 +0800</pubDate>
-      <guid>http://localhost:1313/posts/cloud-native-intro/</guid>
+      <guid>http://localhost:50987/posts/cloud-native-intro/</guid>
       <description>&lt;h1 id=&#34;云原生技术概览&#34;&gt;云原生技术概览&lt;/h1&gt;&#xA;&lt;h2 id=&#34;什么是云原生&#34;&gt;什么是云原生&lt;/h2&gt;&#xA;&lt;p&gt;云原生（Cloud Native）是一种构建和运行应用程序的方法，充分利用云计算模型的优势。云原生技术使组织能够在现代化、动态环境（如公共云、私有云和混合云）中构建和运行可扩展的应用程序。&lt;/p&gt;</description>
     </item>
   </channel>
