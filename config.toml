@@ -1,9 +1,11 @@
 baseURL = "https://caiplusplus.github.io/"
 languageCode = "zh-cn"
-title = "菜可以"
+title = "Hung的技术博客"
 theme = "ananke"
 hasCJKLanguage = true
 summaryLength = 30
+canonifyURLs = true
+enableGitInfo = true
 
 [params]
   description = "技术学习笔记与日常分享"
@@ -12,6 +14,7 @@ summaryLength = 30
   background_color_class = "bg-black"
   featured_image = "/images/header.jpg"
   recent_posts_number = 5
+  custom_css = ["css/custom.css"]
 
 [menu]
   [[menu.main]]

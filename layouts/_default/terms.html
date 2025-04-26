@@ -1,0 +1,17 @@
+{{ define "main" }}
+<main class="pa3 pa4-ns w-100 w-70-ns center">
+  <section class="mw7 center">
+    <h1 class="f1">{{ .Title }}</h1>
+    
+    <ul class="list pl0">
+      {{ range .Data.Terms.Alphabetical }}
+        <li class="mv2">
+          <a href="{{ .Page.Permalink }}" class="link blue dim">
+            {{ .Page.Title }} <span class="f6 gray">({{ .Count }})</span>
+          </a>
+        </li>
+      {{ end }}
+    </ul>
+  </section>
+</main>
+{{ end }} 

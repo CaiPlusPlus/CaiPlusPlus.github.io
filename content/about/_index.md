@@ -30,5 +30,5 @@ menu:
 
 欢迎通过以下方式与我交流：
 
-Email: [菜可以的📮](mailto:caizihong@gmail.com)
+Email: [菜可以📮](mailto:caizihong@gmail.com)
 GitHub: [CaiPlusPlus](https://github.com/CaiPlusPlus) 
